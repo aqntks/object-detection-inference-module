@@ -41,7 +41,8 @@ class ModelDataHandler: NSObject {
     
     // MARK: - Internal Properties
     /// The current thread count used by the TensorFlow Lite Interpreter.
-    let threadCount = 4
+    let inference_device = "gpu" // cpu or gpu
+    let threadCount = 4 // cpu option
     
     let threshold: Float = 0.5
     
@@ -97,11 +98,24 @@ class ModelDataHandler: NSObject {
         }
         
         // Specify the options for the `Interpreter`.
-        var options = Interpreter.Options()
-        options.threadCount = threadCount
+        var options: Interpreter.Options!
+        var delegate: MetalDelegate!
+        if inference_device == "cpu" {
+            options = Interpreter.Options()
+            options.threadCount = threadCount
+        }
+        else {
+            delegate = MetalDelegate()
+        }
+        
         do {
             // Create the `Interpreter`.
-            interpreter = try Interpreter(modelPath: modelPath, options: options)
+            if inference_device == "cpu" {
+                interpreter = try Interpreter(modelPath: modelPath, options: options)
+            }
+            else {
+                interpreter = try Interpreter(modelPath: modelPath, delegates: [delegate])
+            }
             // Allocate memory for the model's input `Tensor`s.
             try interpreter.allocateTensors()
         } catch let error {
