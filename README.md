@@ -6,4 +6,5 @@ Supported model format
 - pytorch(libtorch)
 - coreml
 
-- tensorflow-lite [xcode gpu setting guide](https://www.tensorflow.org/lite/performance/gpu)
+
+tensorflow-lite [xcode gpu setting guide](https://www.tensorflow.org/lite/performance/gpu)
