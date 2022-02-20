@@ -9,4 +9,6 @@ target 'ObjectDetection' do
 #  pod 'TensorFlowLiteSwift', "~> 2.4.0" # tensorflowlite cpu
   pod 'TensorFlowLiteSwift/Metal', '~> 0.0.1-nightly' # tensorflowlite gpu
 
+# libtorch install
+
 end
